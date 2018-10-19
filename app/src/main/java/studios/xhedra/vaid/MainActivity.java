@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
                 if(bool == "true"){
                     Toast.makeText(MainActivity.this, "True", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getApplicationContext(),QueryPage.class);
+                    startActivity(intent);
                 }
                 else{
                     Toast.makeText(MainActivity.this, "Please try again", Toast.LENGTH_SHORT).show();

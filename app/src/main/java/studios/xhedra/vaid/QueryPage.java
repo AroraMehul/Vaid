@@ -1,5 +1,6 @@
 package studios.xhedra.vaid;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -21,21 +22,24 @@ public class QueryPage extends AppCompatActivity {
         imageUpld.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getApplicationContext(),UploadImage.class);
+                startActivity(intent);
             }
         });
 
         textUpld.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getApplicationContext(),UploadText.class);
+                startActivity(intent);
             }
         });
 
         audioUpld.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getApplicationContext(),UploadAudio.class);
+                startActivity(intent);
             }
         });
     }
