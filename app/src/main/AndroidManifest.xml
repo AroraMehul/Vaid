@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".QueryPage"></activity>
+        <activity android:name=".Chatbot"></activity>
     </application>
 
 </manifest>
