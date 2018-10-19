@@ -8,13 +8,13 @@ import android.widget.Button;
 
 public class QueryPage extends AppCompatActivity {
 
-    private Button imageUpld,textUpld,audioUpld;
+    private Button imageUpld,textUpld,audioUpld,submit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_query_page);
-
+        submit = (Button)findViewById(R.id.submit);
         imageUpld = (Button)findViewById(R.id.upldImg);
         textUpld = (Button)findViewById(R.id.upldText);
         audioUpld = (Button)findViewById(R.id.upldAud);
@@ -39,6 +39,13 @@ public class QueryPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),UploadAudio.class);
+                startActivity(intent);
+            }
+        });
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Chatbot.class);
                 startActivity(intent);
             }
         });
