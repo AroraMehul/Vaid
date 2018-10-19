@@ -30,6 +30,8 @@
             android:layout_weight="4"/>
 
         <Button
+            android:backgroundTint="@color/colorPrimary"
+            android:textColor="@color/colorTextWhite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/upldAud"
@@ -51,11 +53,12 @@
             android:layout_weight="4"/>
 
         <Button
+            android:id="@+id/upldText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/upldText"
+            android:backgroundTint="@color/colorPrimary"
             android:text="Upload"
-            />
+            android:textColor="@color/colorTextWhite" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -73,6 +76,8 @@
             android:layout_weight="4"/>
 
         <Button
+            android:backgroundTint="@color/colorPrimary"
+            android:textColor="@color/colorTextWhite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/upldImg"
@@ -84,6 +89,8 @@
 
     <Button
         android:id="@+id/submit"
+        android:backgroundTint="@color/colorPrimary"
+        android:textColor="@color/colorTextWhite"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -91,6 +98,10 @@
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
         android:layout_marginBottom="13dp"
-        android:text="submit" />
+        android:text="submit"
+        android:layout_marginLeft="108dp"
+        android:layout_marginEnd="108dp"
+        android:layout_marginRight="108dp"
+        android:layout_marginStart="108dp"/>
 
 </RelativeLayout>

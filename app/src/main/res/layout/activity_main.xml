@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,20 +9,39 @@
     tools:context=".MainActivity">
 
 
-
     <EditText
         android:id="@+id/addhar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="182dp"
         android:hint="Enter Your Adhaar Number"
-        />
+        android:layout_marginLeft="10dp"/>
 
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Submit"
-        android:id="@+id/submit"/>
+        android:id="@+id/submit"
+        android:backgroundTint="@color/colorPrimary"
+        android:textColor="@color/colorTextWhite"
+        android:layout_height="46dp"
+        android:layout_width="wrap_content"
+        android:layout_below="@+id/addhar"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="194dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginLeft="108dp"
+        android:layout_marginEnd="108dp"
+        android:layout_marginRight="108dp"
+        android:layout_marginStart="108dp"
+        android:text="@string/submit"
+        android:layout_alignParentLeft="true"
+
+        />
 
 
-</LinearLayout>
+</RelativeLayout>
