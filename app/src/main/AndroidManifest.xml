@@ -16,7 +16,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".QueryPage"></activity>
+        <activity android:name=".QueryPage" />
+        <activity android:name=".UploadImage"
+            android:theme="@style/Theme_Dialog"/>
+        <activity android:name=".UploadAudio"
+            android:theme="@style/Theme_Dialog"/>
+        <activity android:name=".UploadText"
+            android:theme="@style/Theme_Dialog"></activity>
         <activity android:name=".Chatbot"></activity>
     </application>
 
