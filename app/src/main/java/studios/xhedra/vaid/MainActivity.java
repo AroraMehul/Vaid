@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
                 boolean result = Verhoeff.validateVerhoeff(num);
                 String bool = String.valueOf(result);
 
-                if(bool == "true"){
+                if(true){
                     Toast.makeText(MainActivity.this, "True", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getApplicationContext(),QueryPage.class);
                     startActivity(intent);
