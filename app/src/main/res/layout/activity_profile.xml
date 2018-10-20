@@ -147,13 +147,16 @@
                 android:layout_width="36dp"
                 android:layout_height="36dp"
                 android:src="@drawable/photocercle"/>
+
             <TextView
-                android:textStyle="bold"
-                android:layout_gravity="center_vertical"
+
+                android:id="@+id/respTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:paddingLeft="20dp"
-                android:text="Wiliam@gmail.com"/>
+                android:text="Wiliam@gmail.com"
+                android:textStyle="bold" />
         </LinearLayout>
         <LinearLayout
             android:layout_marginTop="25dp"
@@ -165,14 +168,15 @@
                 android:layout_width="36dp"
                 android:layout_height="36dp"
                 android:src="@drawable/photocercle"/>
-            <TextView
-                android:textStyle="bold"
 
-                android:layout_gravity="center_vertical"
+            <TextView
+                android:id="@+id/diseases"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:paddingLeft="20dp"
-                android:text="+266 225 225"/>
+                android:text="+266 225 225"
+                android:textStyle="bold" />
         </LinearLayout>
         <LinearLayout
             android:layout_marginTop="25dp"
@@ -184,14 +188,16 @@
                 android:layout_width="36dp"
                 android:layout_height="36dp"
                 android:src="@drawable/photocercle"/>
-            <TextView
-                android:textStyle="bold"
 
-                android:layout_gravity="center_vertical"
+            <TextView
+                android:id="@+id/symptomes"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:paddingLeft="20dp"
-                android:text="Add to group"/>
+                android:text="Add to group"
+                android:textStyle="bold" />
         </LinearLayout>
         <LinearLayout
             android:layout_marginTop="25dp"

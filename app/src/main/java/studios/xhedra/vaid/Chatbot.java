@@ -53,9 +53,9 @@ public class Chatbot extends AppCompatActivity implements AIListener {
     private ArrayList<Symptom> symptomArrayList;
     private CustomAdapter customAdapter;
     private Button btnnext;
-    public JSONObject finalSymptomsList = new JSONObject();
+    public final ArrayList<String> finalSymptomsList = new ArrayList<String>();
     private JSONObject obj = new JSONObject();
-
+    public String respoTime = "";
     private  String[] symptomlist = new String[]{"nausea","pain chest","vomiting", "cold"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,20 +92,63 @@ public class Chatbot extends AppCompatActivity implements AIListener {
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
-
-
-                                    //finalSymptomsList = finalSymptomsList.getJSONArray(0);
-                                
                                 try {
-                                    Log.e("chatresponse", "onResponse: " + response.getJSONObject("predictions").get("0"));
-                                } catch (JSONException e) {
+                                    int i = 0;
+                                    //Toast.makeText(getApplicationContext(),response.getJSONObject("predictions").get("0").toString(),Toast.LENGTH_LONG).show();
+                                        finalSymptomsList.add(response.getJSONObject("predictions").get(Integer.toString(0)).toString());
+
+                                    //Log.e("final", finalSymptomsList.get(0));
+                                    Toast.makeText(getApplicationContext(),finalSymptomsList.get(0),Toast.LENGTH_LONG).show();
+
+                                    JSONObject object = new JSONObject();
+                                    try {
+                                        object.put("1",finalSymptomsList.get(0));
+                                        object.put("2","17");
+                                        object.put("3","1");
+                                        object.put("4","1");
+                                        object.put("5","20");
+                                        object.put("6","500");
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    final String URL_getTime = "http://adhruv1008.pythonanywhere.com/api";
+                                    // Post params to be sent to the server
+
+                                    JsonObjectRequest req = new JsonObjectRequest(URL_getTime, object,
+                                            new Response.Listener<JSONObject>() {
+                                                @Override
+                                                public void onResponse(JSONObject res) {
+                                                    Log.d("respo", res.toString());
+                                                    try {
+                                                        respoTime = res.get("price").toString();
+                                                    } catch (JSONException e) {
+                                                        e.printStackTrace();
+                                                    }
+                                                }
+                                            }, new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                            VolleyLog.e("Error: ", error.getMessage());
+                                        }
+                                    });
+                                    // add the request object to the queue to be executed
+                                    mRequestQueue.add(req);
+
+
+                                }catch (JSONException e){
                                     e.printStackTrace();
                                 }
 
+                                ArrayList<String> tmpsymp = new ArrayList<String>();
+                                for(int i = 0; i < symptomArrayList.size(); i++){
+                                    tmpsymp.add(symptomArrayList.get(i).getAnimal());
+                                }
 
-                                Toast.makeText(getApplicationContext(),finalSymptomsList.toString(),Toast.LENGTH_LONG).show();
-
-
+                                Intent intent = new Intent(getApplicationContext(), Profile.class);
+                                intent.putExtra("Disease_Name", finalSymptomsList);
+                                intent.putExtra("Symptomes", tmpsymp);
+                                intent.putExtra("Estimate_Time", respoTime);
+                                startActivity(intent);
                             }
 
                         }, new Response.ErrorListener() {
@@ -123,62 +166,8 @@ public class Chatbot extends AppCompatActivity implements AIListener {
                 }
                 mRequestQueue.add(reqDisease);
 
-                try {
-                    Log.e("chatresponse##", "onResponse: " + finalSymptomsList.get("0").toString());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                JSONObject object = new JSONObject();
-                try {
-                    object.put("1",finalSymptomsList.get("0"));
-                    object.put("2","17");
-                    object.put("3","1");
-                    object.put("4","1");
-                    object.put("5","20");
-                    object.put("6","500");
-
-                    //Log.d("json", obj.getJSONArray("predictions").get(0).toString());
 
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-
-
-                Toast.makeText(getApplicationContext(),object.toString(),Toast.LENGTH_SHORT).show();
-
-                final String URL_getTime = "http://adhruv1008.pythonanywhere.com/api";
-                // Post params to be sent to the server
-
-                JsonObjectRequest req = new JsonObjectRequest(URL_getTime, object,
-                        new Response.Listener<JSONObject>() {
-                            @Override
-                            public void onResponse(JSONObject res) {
-                                Log.d("respo", res.toString());
-                                try {
-                                    Toast.makeText(getApplicationContext(), res.getString("price").toString(), Toast.LENGTH_LONG).show();
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-
-
-                            }
-
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        VolleyLog.e("Error: ", error.getMessage());
-                    }
-                });
-
-
-
-                // add the request object to the queue to be executed
-                mRequestQueue.add(req);
-                /*Intent intent = new Intent(getApplicationContext(), Profile.class);
-                startActivity(intent);*/
             }
         });
     }
@@ -309,4 +298,6 @@ public class Chatbot extends AppCompatActivity implements AIListener {
     public void onListeningFinished() {
 
     }
+
+
 }
