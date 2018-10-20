@@ -52,7 +52,7 @@ public class Chatbot extends AppCompatActivity implements AIListener {
     private CustomAdapter customAdapter;
     private Button btnnext;
     private String[] finalSymptomsList;
-    private  String[] symptomlist = new String[]{"nausea","pain chest","vomiting"};
+    private  String[] symptomlist = new String[]{"nausea","pain chest","vomiting", "diseaase"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,7 +112,7 @@ public class Chatbot extends AppCompatActivity implements AIListener {
                 mRequestQueue.add(reqDisease);
 
                 HashMap<String,String> params_time = new HashMap<>();
-                params_time.put("F1", finalSymptomsList[0]);
+                params_time.put("F1", "diabetes");
                 params_time.put("F2", "17");
                 params_time.put("F3", "15");
                 params_time.put("F4","45");
