@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.media.MediaRecorder;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -19,12 +20,23 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
 
 public class UploadAudio extends AppCompatActivity {
     FloatingActionButton record;
-    private String mFileName = null;
+    private static String mFileName = null;
     private MediaRecorder mRecorder;
     private Boolean isRecording = false;
     private TextView statusText;
@@ -112,11 +124,51 @@ public class UploadAudio extends AppCompatActivity {
     }
 
 
+
+
     private void stopRecording(){
         mRecorder.stop();
         mRecorder.release();
         mRecorder = null;
         statusText.setText("Tap mic to speak");
+        new RetrieveFeedTask().execute(mFileName);
+
         //uploadAudio();
+    }
+}
+
+class RetrieveFeedTask extends AsyncTask<String, Void, String> {
+
+    private Exception exception;
+
+    protected String doInBackground(String... path) {
+        try {
+
+            File audioFile = new File(path[0]);
+            final MediaType MEDIA_TYPE_AUDIO = MediaType.parse("audio/3gp");
+            OkHttpClient client = new OkHttpClient.Builder().connectTimeout(30, TimeUnit.SECONDS).writeTimeout(30, TimeUnit.SECONDS).readTimeout(30, TimeUnit.SECONDS).build();
+            MultipartBody.Builder mMultipartBody = new MultipartBody.Builder().setType(MultipartBody.FORM);
+            mMultipartBody.addFormDataPart("file", "audio.3gp", RequestBody.create(MEDIA_TYPE_AUDIO, audioFile));
+
+
+            RequestBody mRequestBody = mMultipartBody.build();
+
+            okhttp3.Request request = new okhttp3.Request.Builder()
+                    .url("http://172.20.53.23:8082/uploadfile").post(mRequestBody)
+                    .build();
+
+            okhttp3.Response response = client.newCall(request).execute();
+            String responseString = response.body().string();
+        } catch (Exception e) {
+            this.exception = e;
+
+            return null;
+        }
+        return null;
+    }
+
+    protected void onPostExecute(String feed) {
+        // TODO: check this.exception
+        // TODO: do something with the feed
     }
 }
