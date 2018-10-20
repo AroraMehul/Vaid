@@ -18,11 +18,7 @@
             android:value="ocr" />
 
         <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".QueryPage" />
         <activity android:name=".UploadImage"
@@ -43,6 +39,14 @@
                 android:resource="@xml/file_paths" />
         </provider>
         <activity android:name=".Profile" />
+        <activity android:name=".SplashScreen"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
     </application>
 
 </manifest>
