@@ -1,28 +1,65 @@
 package studios.xhedra.vaid;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
+import android.hardware.camera2.CameraAccessException;
+import android.hardware.camera2.CameraCharacteristics;
+import android.hardware.camera2.CameraManager;
+import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.util.SparseIntArray;
+import android.view.Surface;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.ml.vision.FirebaseVision;
+import com.google.firebase.ml.vision.common.FirebaseVisionImage;
+import com.google.firebase.ml.vision.common.FirebaseVisionImageMetadata;
+import com.google.firebase.ml.vision.text.FirebaseVisionText;
+
+import com.google.firebase.ml.vision.text.FirebaseVisionTextRecognizer;
+import com.google.firebase.ml.vision.text.RecognizedLanguage;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity implements TextToSpeech.OnInitListener,View.OnClickListener{
+import static android.widget.Toast.LENGTH_LONG;
 
+
+@RequiresApi(api = Build.VERSION_CODES.DONUT)
+public class MainActivity extends AppCompatActivity implements TextToSpeech.OnInitListener,View.OnClickListener{
+    private String adhaarnumber = "";
     private EditText adhaar;
     private Button submit;
     private TextToSpeech engine;
@@ -30,6 +67,103 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     public FloatingActionButton speakButton1;
 
     public static final int VOICE_RECOGNITION_REQUEST_CODE = 1234;
+
+    Button analyze,click;
+    ImageView display;
+    static final int REQUEST_TAKE_PHOTO = 1;
+    private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
+    static {
+        ORIENTATIONS.append(Surface.ROTATION_0, 90);
+        ORIENTATIONS.append(Surface.ROTATION_90, 0);
+        ORIENTATIONS.append(Surface.ROTATION_180, 270);
+        ORIENTATIONS.append(Surface.ROTATION_270, 180);
+    }
+
+    /**
+     * Get the angle by which an image must be rotated given the device's current
+     * orientation.
+     */
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private int getRotationCompensation(String cameraId, Activity activity, Context context)
+            throws CameraAccessException {
+        // Get the device's current rotation relative to its "native" orientation.
+        // Then, from the ORIENTATIONS table, look up the angle the image must be
+        // rotated to compensate for the device's rotation.
+        int deviceRotation = activity.getWindowManager().getDefaultDisplay().getRotation();
+        int rotationCompensation = ORIENTATIONS.get(deviceRotation);
+
+        // On most devices, the sensor orientation is 90 degrees, but for some
+        // devices it is 270 degrees. For devices with a sensor orientation of
+        // 270, rotate the image an additional 180 ((270 + 270) % 360) degrees.
+        CameraManager cameraManager = (CameraManager) context.getSystemService(CAMERA_SERVICE);
+        int sensorOrientation = cameraManager.getCameraCharacteristics(cameraId).get(CameraCharacteristics.SENSOR_ORIENTATION);
+        rotationCompensation = (rotationCompensation + sensorOrientation + 270) % 360;
+
+        // Return the corresponding FirebaseVisionImageMetadata rotation value.
+        int result;
+        switch (rotationCompensation) {
+            case 0:
+                result = FirebaseVisionImageMetadata.ROTATION_0;
+                break;
+            case 90:
+                result = FirebaseVisionImageMetadata.ROTATION_90;
+                break;
+            case 180:
+                result = FirebaseVisionImageMetadata.ROTATION_180;
+                break;
+            case 270:
+                result = FirebaseVisionImageMetadata.ROTATION_270;
+                break;
+            default:
+                result = FirebaseVisionImageMetadata.ROTATION_0;
+                Log.e("TEXT_RECOG", "Bad rotation value: " + rotationCompensation);
+        }
+        return result;
+    }
+
+    // Create file for camera dump
+    String mCurrentPhotoPath;
+    File photoFile = null;
+    @RequiresApi(api = Build.VERSION_CODES.FROYO)
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                "picture",  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        mCurrentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
+    //Fire up intent to take photo
+    @RequiresApi(api = Build.VERSION_CODES.FROYO)
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            // Create the File where the photo should go
+
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                Log.d("File Error in Camera", ex.toString());
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(this,
+                        "studios.xhedra.vaid.fileprovider",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+            }
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +195,98 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 }
             }
         });
+
+        analyze = findViewById(R.id.analyze);
+        click = findViewById(R.id.click);
+        display = findViewById(R.id.imageView2);
+        analyze.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                display.setImageURI(Uri.parse(mCurrentPhotoPath));
+                FirebaseVisionImage image = null;
+
+                try {
+                    image = FirebaseVisionImage.fromFilePath(getApplicationContext(), Uri.fromFile(photoFile));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                FirebaseVisionTextRecognizer textRecognizer = FirebaseVision.getInstance()
+                        .getOnDeviceTextRecognizer();
+                if (image != null) {
+                    textRecognizer.processImage(image)
+                            .addOnSuccessListener(new OnSuccessListener<FirebaseVisionText>() {
+                                @Override
+                                public void onSuccess(FirebaseVisionText result) {
+                                    Toast.makeText(getApplicationContext(), result.getText(), LENGTH_LONG).show();
+                                    String resultText = result.getText();
+                                    
+                                    for (FirebaseVisionText.TextBlock block: result.getTextBlocks()) {
+                                        String blockText = block.getText();
+                                        Float blockConfidence = block.getConfidence();
+                                        List<RecognizedLanguage> blockLanguages = block.getRecognizedLanguages();
+                                        Point[] blockCornerPoints = block.getCornerPoints();
+                                        Rect blockFrame = block.getBoundingBox();
+                                        for (FirebaseVisionText.Line line: block.getLines()) {
+                                            String lineText = line.getText();
+                                            Float lineConfidence = line.getConfidence();
+                                            List<RecognizedLanguage> lineLanguages = line.getRecognizedLanguages();
+                                            Point[] lineCornerPoints = line.getCornerPoints();
+                                            Rect lineFrame = line.getBoundingBox();
+                                            int counter = 0;
+
+                                            for (FirebaseVisionText.Element element: line.getElements()) {
+                                                String elementText = element.getText();
+                                                counter++;
+                                                if(counter == 7 || counter == 8 || counter == 9){
+                                                    adhaarnumber += elementText;
+                                                }
+                                                Log.d("result", "onSuccess: " + elementText.toString());
+                                                Float elementConfidence = element.getConfidence();
+                                                List<RecognizedLanguage> elementLanguages = element.getRecognizedLanguages();
+                                                Point[] elementCornerPoints = element.getCornerPoints();
+                                                Rect elementFrame = element.getBoundingBox();
+                                            }
+
+
+                                        }
+                                    }
+                                    checkAdhaar();
+                                }
+                            })
+                            .addOnFailureListener(
+                                    new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(getApplicationContext(), e.getMessage(), LENGTH_LONG).show();
+                                        }
+                                    });
+
+                }else {
+                    Toast.makeText(getApplicationContext(),"PHOTO NULL", LENGTH_LONG).show();
+                }
+            }
+        });
+        click.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dispatchTakePictureIntent();
+            }
+        });
     }
+
+    public void checkAdhaar(){
+
+        if(adhaarnumber.compareTo(adhaar.getText().toString()) == 0){
+            Toast.makeText(this, adhaarnumber, Toast.LENGTH_SHORT).show();
+
+        }
+        else{
+            Toast.makeText(this, "Please try again", Toast.LENGTH_SHORT).show();
+
+        }
+    }
+
+
 
     @Override
     public void onInit(int status) {
