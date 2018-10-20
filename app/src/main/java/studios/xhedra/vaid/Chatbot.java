@@ -84,6 +84,43 @@ public class Chatbot extends AppCompatActivity implements AIListener {
                 final String URL = "http://172.20.53.23:8082/api";
                 // Post params to be sent to the server
 
+                JsonObjectRequest reqDisease = new JsonObjectRequest(URL, new JSONObject(params),
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                try {
+                                    Toast.makeText(getApplicationContext(), response.get("predictions").toString(), Toast.LENGTH_LONG).show();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        VolleyLog.e("Error: ", error.getMessage());
+                    }
+                });
+
+
+
+                // add the request object to the queue to be executed
+                if (mRequestQueue == null) {
+                    mRequestQueue = Volley.newRequestQueue(getApplicationContext());
+                }
+                mRequestQueue.add(reqDisease);
+                /*
+                ArrayList<Integer> selectedSymptomesIndexes = customAdapter.getSelectedList();
+                HashMap<String,String> params = new HashMap<>();
+                for(int i = 0; i < selectedSymptomesIndexes.size(); i++){
+                    params.put("Sym" + i , symptomlist[i]);
+                }
+                Toast.makeText(getApplicationContext(),params.toString(),Toast.LENGTH_LONG).show();
+
+                final String URL = "http://172.20.53.23:8082/api";
+                // Post params to be sent to the server
+
                 JsonObjectRequest req = new JsonObjectRequest(URL, new JSONObject(params),
                         new Response.Listener<JSONObject>() {
                             @Override
@@ -109,7 +146,7 @@ public class Chatbot extends AppCompatActivity implements AIListener {
                 if (mRequestQueue == null) {
                     mRequestQueue = Volley.newRequestQueue(getApplicationContext());
                 }
-                mRequestQueue.add(req);
+                mRequestQueue.add(req);*/
                 Intent intent = new Intent(getApplicationContext(), Profile.class);
                 startActivity(intent);
             }
