@@ -27,8 +27,7 @@
         <activity android:name=".UploadText"
             android:theme="@style/Theme_Dialog"></activity>
         <activity android:name=".Chatbot"></activity>
-        <activity android:name=".Profile"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity android:name=".Profile" />
     </application>
 
 </manifest>
