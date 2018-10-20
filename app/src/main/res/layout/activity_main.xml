@@ -9,81 +9,121 @@
     android:gravity="center"
     tools:context=".MainActivity">
 
-    <ListView
+    <Button
+        android:id="@+id/analyze"
         android:layout_width="wrap_content"
-        android:layout_height="1dp"
-        android:id="@+id/list1"/>
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/inputLayoutaddhar"
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/click"
+        android:layout_alignBottom="@+id/click"
         android:layout_marginBottom="8dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginRight="28dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/analyze"
+        app:layout_constraintBottom_toTopOf="@+id/addhar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/click"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView2"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="24dp"
+        android:text="@string/take"
+        app:layout_constraintEnd_toStartOf="@+id/analyze"
+        app:layout_constraintHorizontal_bias="0.312"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="250dp"
+        android:layout_height="208dp"
+
+        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/todo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/list1">
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/common_full_open_on_phone" />
 
-        <EditText
 
-            android:id="@+id/addhar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginEnd="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="182dp"
-            android:hint="Enter Your Adhaar Number" />
-    </android.support.design.widget.TextInputLayout>
+            <ListView
+                android:id="@+id/list1"
+                android:layout_width="wrap_content"
+                android:layout_height="1dp" />
+
+
+    <TextView
+
+        android:id="@+id/addhar"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_gravity="center"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="56dp"
+        android:hint="Your adhaar number"
+        android:textSize="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/click" />
+
 
     <Button
         android:id="@+id/submit"
         android:layout_width="wrap_content"
         android:layout_height="46dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
         android:layout_marginBottom="8dp"
+
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/button_round"
         android:backgroundTint="#fff"
         android:elevation="15dp"
+        android:gravity="center"
         android:text="@string/submit"
         android:textColor="@color/startblue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_speak1"
-        app:layout_constraintHorizontal_bias="0.696"
+        app:layout_constraintHorizontal_bias="0.306"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputLayoutaddhar"
-        app:layout_constraintVertical_bias="0.125"
+        app:layout_constraintTop_toBottomOf="@+id/addhar"
         tools:ignore="NotSibling" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/btn_speak1"
         android:layout_width="73dp"
         android:layout_height="61dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/submit"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginRight="100dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginRight="56dp"
+        android:layout_marginTop="8dp"
+        app:backgroundTint="@android:color/background_light"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputLayoutaddhar"
-        app:layout_constraintVertical_bias="0.082"
+        app:layout_constraintTop_toBottomOf="@+id/addhar"
+        app:rippleColor="@color/startblue"
         app:srcCompat="@android:drawable/ic_btn_speak_now" />
+
 
 
 </android.support.constraint.ConstraintLayout>
