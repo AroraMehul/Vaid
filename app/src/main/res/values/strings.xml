@@ -2,4 +2,7 @@
     <string name="app_name">Vaid</string>
     <string name="submit">Submit</string>
     <string name="tap_mic_to_speak">Tap mic to speak...</string>
+    <string name="analyze">Analyze</string>
+    <string name="take">Take</string>
+    <string name="todo">Todo</string>
 </resources>
