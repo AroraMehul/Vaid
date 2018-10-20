@@ -131,13 +131,13 @@ public class UploadAudio extends AppCompatActivity {
         mRecorder.release();
         mRecorder = null;
         statusText.setText("Tap mic to speak");
-        new RetrieveFeedTask().execute(mFileName);
+        new SendAudio().execute(mFileName);
 
         //uploadAudio();
     }
 }
 
-class RetrieveFeedTask extends AsyncTask<String, Void, String> {
+class SendAudio extends AsyncTask<String, Void, String> {
 
     private Exception exception;
 
