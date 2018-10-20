@@ -30,7 +30,7 @@ public class QueryPage extends AppCompatActivity {
         textUpld.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),UploadText.class);
+                Intent intent = new Intent(getApplicationContext(),UploadSymptome.class);
                 startActivity(intent);
             }
         });

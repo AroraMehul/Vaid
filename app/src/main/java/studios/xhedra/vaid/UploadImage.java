@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,6 +33,7 @@ import okhttp3.RequestBody;
 public class UploadImage extends AppCompatActivity {
     TextView takeImage;
     ImageView preview;
+    Button nextBtn;
     Uri photoURI;
     static final int REQUEST_TAKE_PHOTO = 1;
     @Override
@@ -40,6 +42,14 @@ public class UploadImage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_image);
         takeImage = findViewById(R.id.takeImage);
+        nextBtn = findViewById(R.id.next);
+        nextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Chatbot.class);
+                startActivity(intent);
+            }
+        });
         WindowManager manager = (WindowManager) getSystemService(Activity.WINDOW_SERVICE);
         int width, height;
         WindowManager.LayoutParams params;
@@ -62,7 +72,7 @@ public class UploadImage extends AppCompatActivity {
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(this.getWindow().getAttributes());
         lp.width = width;
-        lp.height = height*3/4;
+        lp.height = height*4/5;
         this.getWindow().setAttributes(lp);
 
         this.setFinishOnTouchOutside(true);

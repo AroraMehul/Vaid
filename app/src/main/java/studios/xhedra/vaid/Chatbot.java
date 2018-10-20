@@ -57,47 +57,20 @@ public class Chatbot extends AppCompatActivity implements AIListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chatbot);
-        listenButton = (Button) findViewById(R.id.listenButton);
         resultTextView = (TextView) findViewById(R.id.resultTextView);
         final AIConfiguration config = new AIConfiguration("0c2fafd54b244d64858e6ba7ccd6edc0",
                 AIConfiguration.SupportedLanguages.English,
                 AIConfiguration.RecognitionEngine.System);
         aiService = AIService.getService(this, config);
         aiService.setListener(this);
-        listenButton.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.M)
-            @Override
-            public void onClick(View v) {
-                requestRecordAudioPermission();
-
-            }
-
-        });
         lv = (ListView) findViewById(R.id.lv);
-        btnselect = (Button) findViewById(R.id.select);
-        btndeselect = (Button) findViewById(R.id.deselect);
         btnnext = (Button) findViewById(R.id.next);
 
         symptomArrayList = getSymptom(false);
         customAdapter = new CustomAdapter(this,symptomArrayList);
         lv.setAdapter(customAdapter);
 
-        btnselect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                symptomArrayList = getSymptom(true);
-                customAdapter = new CustomAdapter(Chatbot.this,symptomArrayList);
-                lv.setAdapter(customAdapter);
-            }
-        });
-        btndeselect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                symptomArrayList = getSymptom(false);
-                customAdapter = new CustomAdapter(Chatbot.this,symptomArrayList);
-                lv.setAdapter(customAdapter);
-            }
-        });
+
         btnnext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,14 +81,19 @@ public class Chatbot extends AppCompatActivity implements AIListener {
                 }
                 Toast.makeText(getApplicationContext(),params.toString(),Toast.LENGTH_LONG).show();
 
-                final String URL = "http://192.168.137.1:8082/api";
+                final String URL = "http://172.20.53.23:8082/api";
                 // Post params to be sent to the server
 
-                JsonObjectRequest req = new JsonObjectRequest(URL, new JSONObject(params),
+                JsonObjectRequest reqDisease = new JsonObjectRequest(URL, new JSONObject(params),
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
-                                Toast.makeText(getApplicationContext(),"Symptonic Response", Toast.LENGTH_LONG).show();
+                                try {
+                                    Toast.makeText(getApplicationContext(), response.get("predictions").toString(), Toast.LENGTH_LONG).show();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
                             }
 
                         }, new Response.ErrorListener() {
@@ -131,8 +109,46 @@ public class Chatbot extends AppCompatActivity implements AIListener {
                 if (mRequestQueue == null) {
                     mRequestQueue = Volley.newRequestQueue(getApplicationContext());
                 }
-                mRequestQueue.add(req);
+                mRequestQueue.add(reqDisease);
+                /*
+                ArrayList<Integer> selectedSymptomesIndexes = customAdapter.getSelectedList();
+                HashMap<String,String> params = new HashMap<>();
+                for(int i = 0; i < selectedSymptomesIndexes.size(); i++){
+                    params.put("Sym" + i , symptomlist[i]);
+                }
+                Toast.makeText(getApplicationContext(),params.toString(),Toast.LENGTH_LONG).show();
 
+                final String URL = "http://172.20.53.23:8082/api";
+                // Post params to be sent to the server
+
+                JsonObjectRequest req = new JsonObjectRequest(URL, new JSONObject(params),
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                try {
+                                    Toast.makeText(getApplicationContext(), response.get("predictions").toString(), Toast.LENGTH_LONG).show();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        VolleyLog.e("Error: ", error.getMessage());
+                    }
+                });
+
+
+
+                // add the request object to the queue to be executed
+                if (mRequestQueue == null) {
+                    mRequestQueue = Volley.newRequestQueue(getApplicationContext());
+                }
+                mRequestQueue.add(req);*/
+                Intent intent = new Intent(getApplicationContext(), Profile.class);
+                startActivity(intent);
             }
         });
     }

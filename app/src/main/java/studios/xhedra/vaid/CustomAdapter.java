@@ -11,9 +11,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-/**
- * Created by hardik on 9/1/17.
- */
+
 public class CustomAdapter  extends BaseAdapter {
     public ArrayList<Integer> selected = new ArrayList<>();
     private Context context;
@@ -88,7 +86,7 @@ public class CustomAdapter  extends BaseAdapter {
                 View tempview = (View) holder.checkBox.getTag(R.integer.btnplusview);
                 TextView tv = (TextView) tempview.findViewById(R.id.animal);
                 Integer pos = (Integer)  holder.checkBox.getTag();
-                Toast.makeText(context, "Checkbox "+pos+" clicked!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "Checkbox "+pos+" clicked!", Toast.LENGTH_SHORT).show();
 
                 if(SymAL.get(pos).getSelected()){
                     selected.remove(pos);
