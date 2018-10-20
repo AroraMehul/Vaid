@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.WindowManager;
 
-public class UploadText extends AppCompatActivity {
+public class UploadSymptome extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +31,7 @@ public class UploadText extends AppCompatActivity {
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(this.getWindow().getAttributes());
         lp.width = width;
-        lp.height = height*3/4;
+        lp.height = height*4/5;
         this.getWindow().setAttributes(lp);
 
         this.setFinishOnTouchOutside(true);

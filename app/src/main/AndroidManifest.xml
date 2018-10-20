@@ -24,7 +24,7 @@
             android:theme="@style/Theme_Dialog"/>
         <activity android:name=".UploadAudio"
             android:theme="@style/Theme_Dialog"/>
-        <activity android:name=".UploadText"
+        <activity android:name=".UploadSymptome"
             android:theme="@style/Theme_Dialog"></activity>
         <activity android:name=".Chatbot"></activity>
 

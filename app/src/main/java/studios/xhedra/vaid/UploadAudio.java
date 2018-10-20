@@ -2,6 +2,7 @@ package studios.xhedra.vaid;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.media.MediaRecorder;
@@ -16,6 +17,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,11 +42,20 @@ public class UploadAudio extends AppCompatActivity {
     private MediaRecorder mRecorder;
     private Boolean isRecording = false;
     private TextView statusText;
+    private Button nextBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_audio);
         record = findViewById(R.id.floatingActionButton);
+        nextBtn = findViewById(R.id.next);
+        nextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), UploadImage.class);
+                startActivity(intent);
+            }
+        });
         WindowManager manager = (WindowManager) getSystemService(Activity.WINDOW_SERVICE);
         int width, height;
         WindowManager.LayoutParams params;
@@ -63,7 +74,7 @@ public class UploadAudio extends AppCompatActivity {
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(this.getWindow().getAttributes());
         lp.width = width;
-        lp.height = height*3/4;
+        lp.height = height*4/5;
         this.getWindow().setAttributes(lp);
 
         this.setFinishOnTouchOutside(true);
