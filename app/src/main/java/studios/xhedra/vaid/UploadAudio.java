@@ -77,11 +77,7 @@ public class UploadAudio extends AppCompatActivity {
         // If the user previously denied this permission then show a message explaining why
         // this permission is needed
         if (this.checkCallingOrSelfPermission(requiredPermission) == PackageManager.PERMISSION_GRANTED) {
-            try {
-                startRecording();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            startRecording();
         } else {
 
             Toast.makeText(this, "This app needs to record audio through the microphone....", Toast.LENGTH_SHORT).show();
@@ -95,35 +91,32 @@ public class UploadAudio extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String permissions[], @NonNull int[] grantResults) {
         if (requestCode == 101 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            try {
-                startRecording();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            startRecording();
         }
-
     }
-    private void startRecording() throws IOException {
-        File outFile=new File(mFileName);
-
-        if (outFile.exists())
-        { outFile.delete();}
-
-        mRecorder=new MediaRecorder();
+    private void startRecording(){
+        mRecorder = new MediaRecorder();
         mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+        mRecorder.setOutputFile(mFileName);
         mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-        mRecorder.setOutputFile(outFile.getAbsolutePath());
-        mRecorder.prepare();
+
+        try {
+            mRecorder.prepare();
+        } catch (IOException e) {
+            Log.e("REC AUDIO", "prepare() failed");
+        }
 
         mRecorder.start();
+        statusText.setText("Listening");
     }
 
-    private void stopRecording() {
+
+    private void stopRecording(){
         mRecorder.stop();
         mRecorder.release();
         mRecorder = null;
-
+        statusText.setText("Tap mic to speak");
         //uploadAudio();
     }
 }
