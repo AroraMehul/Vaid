@@ -182,18 +182,10 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String num = adhaar.getText().toString();
-                boolean result = Verhoeff.validateVerhoeff(num);
-                String bool = String.valueOf(result);
 
-                if(true){
-                    Toast.makeText(MainActivity.this, "True", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getApplicationContext(),QueryPage.class);
                     startActivity(intent);
-                }
-                else{
-                    Toast.makeText(MainActivity.this, "Please try again", Toast.LENGTH_SHORT).show();
-                }
+
             }
         });
 

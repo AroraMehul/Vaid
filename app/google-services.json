@@ -1,0 +1,86 @@
+{
+  "project_info": {
+    "project_number": "1012545729025",
+    "firebase_url": "https://testrecog-c6e29.firebaseio.com",
+    "project_id": "testrecog-c6e29",
+    "storage_bucket": "testrecog-c6e29.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1012545729025:android:e431a511eee402a7",
+        "android_client_info": {
+          "package_name": "studios.xhedra.vaid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1012545729025-j9nkkif1869pinsd9h22ab4eglqjnl2u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBsqqJmsjegNdvUW8AiwPmlEdjn5gL-JM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1012545729025:android:515bf433c7827678",
+        "android_client_info": {
+          "package_name": "xhedra.textrecog"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1012545729025-0qjb7rssqooqg9fetrjrb9rdfhu603mc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "xhedra.textrecog",
+            "certificate_hash": "f0f78933bba5570f0070cc5cc1558178f90af440"
+          }
+        },
+        {
+          "client_id": "1012545729025-j9nkkif1869pinsd9h22ab4eglqjnl2u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBsqqJmsjegNdvUW8AiwPmlEdjn5gL-JM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1012545729025-j9nkkif1869pinsd9h22ab4eglqjnl2u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
