@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="#fafafa"
     android:layout_height="match_parent"
     tools:context=".QueryPage">
 
@@ -30,8 +31,9 @@
             android:layout_weight="4"/>
 
         <Button
-            android:backgroundTint="@color/colorPrimary"
-            android:textColor="@color/colorTextWhite"
+            android:backgroundTint="#fff"
+            android:textColor="@color/startblue"
+            android:background="@drawable/button_round"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/upldAud"
@@ -53,12 +55,13 @@
             android:layout_weight="4"/>
 
         <Button
+            android:backgroundTint="#fff"
+            android:textColor="@color/startblue"
+            android:background="@drawable/button_round"
             android:id="@+id/upldText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorPrimary"
-            android:text="Upload"
-            android:textColor="@color/colorTextWhite" />
+            android:text="Upload" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -76,8 +79,9 @@
             android:layout_weight="4"/>
 
         <Button
-            android:backgroundTint="@color/colorPrimary"
-            android:textColor="@color/colorTextWhite"
+            android:backgroundTint="#fff"
+            android:textColor="@color/startblue"
+            android:background="@drawable/button_round"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/upldImg"
@@ -99,6 +103,7 @@
         android:layout_gravity="bottom"
         android:layout_marginBottom="13dp"
         android:text="submit"
+        android:background="@drawable/button_round"
         android:layout_marginLeft="108dp"
         android:layout_marginEnd="108dp"
         android:layout_marginRight="108dp"

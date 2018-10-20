@@ -45,7 +45,7 @@ public class QueryPage extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Chatbot.class);
+                Intent intent = new Intent(getApplicationContext(), Profile.class);
                 startActivity(intent);
             }
         });
