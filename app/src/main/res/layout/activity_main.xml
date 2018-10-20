@@ -8,7 +8,10 @@
     android:gravity="center"
     tools:context=".MainActivity">
 
-
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/inputLayoutaddhar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <EditText
         android:id="@+id/addhar"
         android:layout_width="match_parent"
@@ -20,7 +23,7 @@
         android:layout_marginTop="182dp"
         android:hint="Enter Your Adhaar Number"
         android:layout_marginLeft="10dp"/>
-
+    </android.support.design.widget.TextInputLayout>
     <Button
         android:id="@+id/submit"
         android:backgroundTint="@color/colorPrimary"
@@ -41,7 +44,7 @@
         android:text="@string/submit"
         android:layout_alignParentLeft="true"
 
-        />
+        tools:ignore="NotSibling" />
 
 
 </RelativeLayout>
