@@ -34,6 +34,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -60,7 +61,7 @@ import static android.widget.Toast.LENGTH_LONG;
 @RequiresApi(api = Build.VERSION_CODES.DONUT)
 public class MainActivity extends AppCompatActivity implements TextToSpeech.OnInitListener,View.OnClickListener{
     private String adhaarnumber = "";
-    private EditText adhaar;
+    private TextView adhaar;
     private Button submit;
     private TextToSpeech engine;
     public ListView mList1;
@@ -170,7 +171,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        adhaar = (EditText)findViewById(R.id.addhar);
+        adhaar = (TextView) findViewById(R.id.addhar);
         submit = (Button)findViewById(R.id.submit);
 
         speakButton1 = (FloatingActionButton) findViewById(R.id.btn_speak1);
@@ -217,9 +218,17 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                             .addOnSuccessListener(new OnSuccessListener<FirebaseVisionText>() {
                                 @Override
                                 public void onSuccess(FirebaseVisionText result) {
-                                    Toast.makeText(getApplicationContext(), result.getText(), LENGTH_LONG).show();
+                                   // Toast.makeText(getApplicationContext(), result.getText(), LENGTH_LONG).show();
                                     String resultText = result.getText();
-                                    
+                                    for(FirebaseVisionText.TextBlock bl : result.getTextBlocks()){
+                                        for(FirebaseVisionText.Line line: bl.getLines()){
+                                            if(line.getText().length() == 14){
+                                                adhaarnumber = line.getText();
+                                            }
+                                        }
+                                    }
+                                    adhaar.setText(adhaarnumber);
+                                    //Toast.makeText(MainActivity.this, adhaarnumber, Toast.LENGTH_SHORT).show();
                                     for (FirebaseVisionText.TextBlock block: result.getTextBlocks()) {
                                         String blockText = block.getText();
                                         Float blockConfidence = block.getConfidence();
@@ -250,7 +259,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
                                         }
                                     }
-                                    checkAdhaar();
+                                    //checkAdhaar();
                                 }
                             })
                             .addOnFailureListener(
@@ -275,9 +284,14 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     }
 
     public void checkAdhaar(){
-
-        if(adhaarnumber.compareTo(adhaar.getText().toString()) == 0){
-            Toast.makeText(this, adhaarnumber, Toast.LENGTH_SHORT).show();
+        String adhaarCarry = "";
+        for(int i = 0 ; i < adhaarnumber.length() ; i++){
+            if(adhaarnumber.charAt(i) != ' '){
+                adhaarCarry += adhaarnumber.charAt(i);
+            }
+        }
+        if(adhaarCarry.compareTo(adhaar.getText().toString()) == 0){
+            Toast.makeText(this, adhaarCarry +  " correct", Toast.LENGTH_SHORT).show();
 
         }
         else{
