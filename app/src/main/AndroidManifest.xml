@@ -27,6 +27,16 @@
         <activity android:name=".UploadText"
             android:theme="@style/Theme_Dialog"></activity>
         <activity android:name=".Chatbot"></activity>
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="studios.xhedra.vaid.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
         <activity android:name=".Profile" />
     </application>
 
