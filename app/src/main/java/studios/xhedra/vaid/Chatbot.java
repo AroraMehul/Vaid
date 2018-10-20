@@ -28,6 +28,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -39,6 +40,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -51,8 +53,10 @@ public class Chatbot extends AppCompatActivity implements AIListener {
     private ArrayList<Symptom> symptomArrayList;
     private CustomAdapter customAdapter;
     private Button btnnext;
-    private String[] finalSymptomsList;
-    private  String[] symptomlist = new String[]{"nausea","pain chest","vomiting"};
+    public JSONObject finalSymptomsList = new JSONObject();
+    private JSONObject obj = new JSONObject();
+
+    private  String[] symptomlist = new String[]{"nausea","pain chest","vomiting", "cold"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,18 +85,26 @@ public class Chatbot extends AppCompatActivity implements AIListener {
                 }
                 Toast.makeText(getApplicationContext(),params_Disease.toString(),Toast.LENGTH_LONG).show();
 
-                final String URL_Disease = "http://172.20.53.23:8082/api";
+                final String URL_Disease = "http://192.168.43.194:8082/api";
                 // Post params to be sent to the server
 
                 JsonObjectRequest reqDisease = new JsonObjectRequest(URL_Disease, new JSONObject(params_Disease),
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
+
+
+                                    //finalSymptomsList = finalSymptomsList.getJSONArray(0);
+                                
                                 try {
-                                    finalSymptomsList = (String[]) response.get("predictions");
+                                    Log.e("chatresponse", "onResponse: " + response.getJSONObject("predictions").get("0"));
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
+
+
+                                Toast.makeText(getApplicationContext(),finalSymptomsList.toString(),Toast.LENGTH_LONG).show();
+
 
                             }
 
@@ -111,29 +123,46 @@ public class Chatbot extends AppCompatActivity implements AIListener {
                 }
                 mRequestQueue.add(reqDisease);
 
-                HashMap<String,String> params_time = new HashMap<>();
-                params_time.put("F1", finalSymptomsList[0]);
-                params_time.put("F2", "17");
-                params_time.put("F3", "15");
-                params_time.put("F4","45");
-                params_time.put("F5", "20");
-                params_time.put("F6", "30");
+                try {
+                    Log.e("chatresponse##", "onResponse: " + finalSymptomsList.get("0").toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                JSONObject object = new JSONObject();
+                try {
+                    object.put("1",finalSymptomsList.get("0"));
+                    object.put("2","17");
+                    object.put("3","1");
+                    object.put("4","1");
+                    object.put("5","20");
+                    object.put("6","500");
+
+                    //Log.d("json", obj.getJSONArray("predictions").get(0).toString());
 
 
-                Toast.makeText(getApplicationContext(),params_time.toString(),Toast.LENGTH_LONG).show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
-                final String URL_getTime = "http://172.20.53.23:8082/gettime";
+
+
+                Toast.makeText(getApplicationContext(),object.toString(),Toast.LENGTH_SHORT).show();
+
+                final String URL_getTime = "http://adhruv1008.pythonanywhere.com/api";
                 // Post params to be sent to the server
 
-                JsonObjectRequest req = new JsonObjectRequest(URL_getTime, new JSONObject(params_time),
+                JsonObjectRequest req = new JsonObjectRequest(URL_getTime, object,
                         new Response.Listener<JSONObject>() {
                             @Override
-                            public void onResponse(JSONObject response) {
+                            public void onResponse(JSONObject res) {
+                                Log.d("respo", res.toString());
                                 try {
-                                    Toast.makeText(getApplicationContext(), response.get("predictions").toString(), Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), res.getString("price").toString(), Toast.LENGTH_LONG).show();
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
+
 
                             }
 
@@ -147,12 +176,9 @@ public class Chatbot extends AppCompatActivity implements AIListener {
 
 
                 // add the request object to the queue to be executed
-                if (mRequestQueue == null) {
-                    mRequestQueue = Volley.newRequestQueue(getApplicationContext());
-                }
                 mRequestQueue.add(req);
-                Intent intent = new Intent(getApplicationContext(), Profile.class);
-                startActivity(intent);
+                /*Intent intent = new Intent(getApplicationContext(), Profile.class);
+                startActivity(intent);*/
             }
         });
     }
