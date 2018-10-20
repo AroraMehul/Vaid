@@ -44,15 +44,15 @@ import org.json.JSONObject;
 
 public class Chatbot extends AppCompatActivity implements AIListener {
     RequestQueue mRequestQueue = null;
-    private Button listenButton;
     private TextView resultTextView;
     private AIService aiService;
     private static final String TAG = "Chatbot";
     private ListView lv;
     private ArrayList<Symptom> symptomArrayList;
     private CustomAdapter customAdapter;
-    private Button btnselect, btndeselect, btnnext;
-    private  String[] symptomlist = new String[]{"Cough", "Cold", "Fever", "Headache", "Stomach Ache"};
+    private Button btnnext;
+    private String[] finalSymptomsList;
+    private  String[] symptomlist = new String[]{"nausea","pain chest","vomiting"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,21 +75,21 @@ public class Chatbot extends AppCompatActivity implements AIListener {
             @Override
             public void onClick(View v) {
                 ArrayList<Integer> selectedSymptomesIndexes = customAdapter.getSelectedList();
-                HashMap<String,String> params = new HashMap<>();
+                HashMap<String,String> params_Disease = new HashMap<>();
                 for(int i = 0; i < selectedSymptomesIndexes.size(); i++){
-                    params.put("Sym" + i , symptomlist[i]);
+                    params_Disease.put("Sym" + i , symptomlist[i]);
                 }
-                Toast.makeText(getApplicationContext(),params.toString(),Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),params_Disease.toString(),Toast.LENGTH_LONG).show();
 
-                final String URL = "http://172.20.53.23:8082/api";
+                final String URL_Disease = "http://172.20.53.23:8082/api";
                 // Post params to be sent to the server
 
-                JsonObjectRequest reqDisease = new JsonObjectRequest(URL, new JSONObject(params),
+                JsonObjectRequest reqDisease = new JsonObjectRequest(URL_Disease, new JSONObject(params_Disease),
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
                                 try {
-                                    Toast.makeText(getApplicationContext(), response.get("predictions").toString(), Toast.LENGTH_LONG).show();
+                                    finalSymptomsList = (String[]) response.get("predictions");
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -110,18 +110,22 @@ public class Chatbot extends AppCompatActivity implements AIListener {
                     mRequestQueue = Volley.newRequestQueue(getApplicationContext());
                 }
                 mRequestQueue.add(reqDisease);
-                /*
-                ArrayList<Integer> selectedSymptomesIndexes = customAdapter.getSelectedList();
-                HashMap<String,String> params = new HashMap<>();
-                for(int i = 0; i < selectedSymptomesIndexes.size(); i++){
-                    params.put("Sym" + i , symptomlist[i]);
-                }
-                Toast.makeText(getApplicationContext(),params.toString(),Toast.LENGTH_LONG).show();
 
-                final String URL = "http://172.20.53.23:8082/api";
+                HashMap<String,String> params_time = new HashMap<>();
+                params_time.put("F1", finalSymptomsList[0]);
+                params_time.put("F2", "17");
+                params_time.put("F3", "15");
+                params_time.put("F4","45");
+                params_time.put("F5", "20");
+                params_time.put("F6", "30");
+
+
+                Toast.makeText(getApplicationContext(),params_time.toString(),Toast.LENGTH_LONG).show();
+
+                final String URL_getTime = "http://172.20.53.23:8082/gettime";
                 // Post params to be sent to the server
 
-                JsonObjectRequest req = new JsonObjectRequest(URL, new JSONObject(params),
+                JsonObjectRequest req = new JsonObjectRequest(URL_getTime, new JSONObject(params_time),
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
@@ -146,7 +150,7 @@ public class Chatbot extends AppCompatActivity implements AIListener {
                 if (mRequestQueue == null) {
                     mRequestQueue = Volley.newRequestQueue(getApplicationContext());
                 }
-                mRequestQueue.add(req);*/
+                mRequestQueue.add(req);
                 Intent intent = new Intent(getApplicationContext(), Profile.class);
                 startActivity(intent);
             }
