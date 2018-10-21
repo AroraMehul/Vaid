@@ -16,7 +16,7 @@ public class QueryPage extends AppCompatActivity {
         setContentView(R.layout.activity_query_page);
         submit = (Button)findViewById(R.id.submit);
         imageUpld = (Button)findViewById(R.id.upldImg);
-        textUpld = (Button)findViewById(R.id.upldText);
+        //textUpld = (Button)findViewById(R.id.upldText);
         audioUpld = (Button)findViewById(R.id.upldAud);
 
         imageUpld.setOnClickListener(new View.OnClickListener() {
@@ -27,13 +27,13 @@ public class QueryPage extends AppCompatActivity {
             }
         });
 
-        textUpld.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),UploadSymptome.class);
-                startActivity(intent);
-            }
-        });
+        //textUpld.setOnClickListener(new View.OnClickListener() {
+            //@Override
+            //public void onClick(View v) {
+              //  Intent intent = new Intent(getApplicationContext(),UploadSymptome.class);
+                //startActivity(intent);
+            //}
+        //});
 
         audioUpld.setOnClickListener(new View.OnClickListener() {
             @Override
