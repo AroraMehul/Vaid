@@ -38,7 +38,8 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-        <activity android:name=".Profile" />
+        <activity android:name=".Profile"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity android:name=".SplashScreen"
             android:theme="@style/Theme.AppCompat.NoActionBar">
         <intent-filter>

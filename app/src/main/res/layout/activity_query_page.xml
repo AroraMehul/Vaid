@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,82 +7,123 @@
     android:layout_height="match_parent"
     tools:context=".QueryPage">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:weightSum="3"
-        android:gravity="center">
 
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="179dp"
+        android:layout_height="190dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:elevation="15dp"
+        android:background="@drawable/button_round"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.055"
+        app:srcCompat="@drawable/doc_main_2" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="119dp"
+        android:layout_height="72dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Press This Button to upload your query as an audio or a text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.112"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3"
+        app:layout_constraintVertical_bias="0.134" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="133dp"
+        android:layout_height="62dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Press this Button to upload only a Image                                                                                                                                          "
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/textView5"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3"
+        app:layout_constraintVertical_bias="0.174" />
+
+    <Button
+        android:id="@+id/upldAud"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_weight="0.5"
-        android:weightSum="5">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Upload Audio Or Text"
-            android:paddingLeft="15dp"
-            android:textSize="20dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="52dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_round"
+        android:elevation="15dp"
+        android:text="Upload"
+        android:textColor="@color/startblue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/upldImg"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView5"
+        app:layout_constraintVertical_bias="0.056" />
 
-            android:layout_weight="4"/>
-
-        <Button
-            android:backgroundTint="#fff"
-            android:textColor="@color/startblue"
-            android:background="@drawable/button_round"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/upldAud"
-            android:text="Upload" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/upldImg"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_weight="0.5"
-        android:weightSum="5">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Upload Image"
-            android:paddingLeft="15dp"
-            android:textSize="20dp"
-
-            android:layout_weight="4"/>
-
-        <Button
-            android:backgroundTint="#fff"
-            android:textColor="@color/startblue"
-            android:background="@drawable/button_round"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/upldImg"
-            android:text="Upload"
-            />
-    </LinearLayout>
-
-    </LinearLayout>
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_round"
+        android:elevation="15dp"
+        android:text="Upload"
+        android:textColor="@color/startblue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.928"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView6"
+        app:layout_constraintVertical_bias="0.056" />
 
     <Button
         android:id="@+id/submit"
-        android:backgroundTint="@color/colorPrimary"
-        android:textColor="@color/colorTextWhite"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="13dp"
-        android:text="submit"
-        android:background="@drawable/button_round"
-        android:layout_marginLeft="108dp"
-        android:layout_marginEnd="108dp"
-        android:layout_marginRight="108dp"
-        android:layout_marginStart="108dp"/>
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/button_round_2"
+        android:textColor="@color/colorTextWhite"
+        android:elevation="15dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Submit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.948" />
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>
